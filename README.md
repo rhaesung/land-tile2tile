@@ -18,7 +18,7 @@ To run:
 
 the namelist defines the conversion direction and the paths of the files
 
-Deatails: 
+Details: 
 
 the vector2tile pathway assumes that the vector file exists in the vector_restart_path directory and overwrites/creates tile files in the output_path
 
