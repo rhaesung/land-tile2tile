@@ -4,13 +4,17 @@ Mike Barlage, Clara Draper. Dec 2021.
 
 To compile on hera: 
 
-./configure
-  choose hera
-  load the modules indicated
-./make 
+>configure
+
+ choose hera
+ 
+ load the modules indicated
+ 
+>make 
 
 To run: 
-./vector2tile_converter.exe namelist.vector2tile
+
+>vector2tile_converter.exe namelist.vector2tile
 
 the namelist defines the conversion direction and the paths of the files
 
