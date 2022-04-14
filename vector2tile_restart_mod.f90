@@ -1,5 +1,6 @@
-program vector2tile_converter
+module restart_converter_mod
 
+  use namelist_mod
   use netcdf
   implicit none
 
@@ -35,22 +36,13 @@ program vector2tile_converter
 ! needed by add increments
     double precision, allocatable :: slmsk              (:, :, :)
   end type tile_type    
+  
+contains   
 
-  type namelist_type
-    character*256      :: namelist_name = ""
-    character*11       :: direction = ""
-    character*256      :: tile_path = ""
-    integer            :: tile_size
-    character*19       :: restart_date = ""
-    character*256      :: vector_restart_path = ""
-    character*256      :: tile_restart_path = ""
-    character*256      :: output_path = ""
-    character*256      :: static_filename = ""
-  end type namelist_type    
-
+  subroutine vector2tile_restart(namelist)
+  type(namelist_type) :: namelist
   type(vector_type)   :: vector
   type(tile_type)     :: tile
-  type(namelist_type) :: namelist
   character*256       :: vector_filename
   character*256       :: tile_filename
   character*19        :: date
@@ -59,30 +51,6 @@ program vector2tile_converter
   integer             :: itile, ix, iy, iloc
   integer             :: ncid, dimid, varid, status
   logical             :: file_exists
-  
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Get namelist file name from command line
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  call get_command_argument(1, namelist%namelist_name)
-  if(namelist%namelist_name == "") then 
-        print *,  "add namelist to the command line: "
-        stop 10  
-  endif
-  
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Read namelist information and create date string
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  call ReadNamelist(namelist)
-
-  print*, "conversion direction: ",namelist%direction
-  
-  if(namelist%direction /= "tile2vector" .and. namelist%direction /= "vector2tile" ) then
-    print*, "conversion direction: ",namelist%direction, " not recognized"
-    stop 10 
-  end if
-
   read(namelist%restart_date( 1: 4),'(i4.4)') yyyy
   read(namelist%restart_date( 6: 7),'(i2.2)') mm
   read(namelist%restart_date( 9:10),'(i2.2)') dd
@@ -267,7 +235,7 @@ program vector2tile_converter
   
   end if ! "vector2tile" or "tile2vector" branch
      
-contains   
+  end subroutine vector2tile_restart
   
   subroutine ReadVectorRestart(namelist, date, vector, vector_length)
   
@@ -433,6 +401,7 @@ contains
   character*19        :: date
   character*256       :: tile_filename
   integer             :: ncid, dimid, varid, status
+  integer             :: itile
   logical             :: file_exists
   
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -865,34 +834,6 @@ contains
 
   end subroutine ReadVectorLength
 
-  subroutine ReadNamelist(namelist)
-  
-    type(namelist_type) :: namelist    
-    character*11        :: direction
-    character*256       :: tile_path
-    integer             :: tile_size
-    character*19        :: restart_date
-    character*256       :: vector_restart_path
-    character*256       :: tile_restart_path
-    character*256       :: output_path
-    character*256       :: static_filename
-  
-    namelist / run_setup  / direction, tile_path, tile_size, restart_date, vector_restart_path, tile_restart_path, output_path, static_filename
-
-    open(30, file=namelist%namelist_name, form="formatted")
-     read(30, run_setup)
-    close(30)
-    
-    namelist%direction           = direction
-    namelist%tile_path           = tile_path
-    namelist%tile_size           = tile_size
-    namelist%restart_date        = restart_date
-    namelist%vector_restart_path = vector_restart_path
-    namelist%tile_restart_path   = tile_restart_path
-    namelist%output_path         = output_path
-    namelist%static_filename     = static_filename
-  end subroutine ReadNamelist
-
   subroutine handle_err(status)
     use netcdf
     integer, intent ( in) :: status
@@ -903,4 +844,4 @@ contains
     end if
   end subroutine handle_err
 
-end program vector2tile_converter
+end module restart_converter_mod
