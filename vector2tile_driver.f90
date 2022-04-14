@@ -1,7 +1,7 @@
-program vector2tile_converter
+program vector2tile_driver
 
   use namelist_mod
-  use restart_converter_mod
+  use vector2tile_restart_mod
   implicit none
 
   type(namelist_type)  :: namelist
@@ -17,7 +17,7 @@ program vector2tile_converter
   endif
   
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Read namelist information and create date string
+! Read namelist information
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   call ReadNamelist(namelist)
@@ -45,4 +45,4 @@ program vector2tile_converter
       write(*,*) "choose a valid conversion direction"
   
   end select 
-end program vector2tile_converter
+end program vector2tile_driver

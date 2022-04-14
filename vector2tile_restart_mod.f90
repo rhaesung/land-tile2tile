@@ -1,4 +1,4 @@
-module restart_converter_mod
+module vector2tile_restart_mod
 
   use namelist_mod
   use netcdf
@@ -844,4 +844,4 @@ contains
     end if
   end subroutine handle_err
 
-end module restart_converter_mod
+end module vector2tile_restart_mod
