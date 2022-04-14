@@ -27,7 +27,8 @@ contains
     character*256       :: output_path
     character*256       :: static_filename
 
-    namelist / run_setup  / direction, tile_path, tile_size, restart_date, vector_restart_path, tile_restart_path, output_path, static_filename
+    namelist / run_setup  / direction, tile_path, tile_size, restart_date, vector_restart_path, &
+                            tile_restart_path, output_path, static_filename
 
     open(30, file=namelist%namelist_name, form="formatted")
      read(30, run_setup)
