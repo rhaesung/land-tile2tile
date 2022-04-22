@@ -1,17 +1,20 @@
 &run_setup
 
-! Direction of conversion: either "vector2tile" or "tile2vector"
+!------------------- common -------------------
+! Direction of conversion: either "vector2tile" or "tile2vector" for restart file
+!                                 "lndp2tile" or "lndp2vector" for perturbation 
 
   direction = "vector2tile"
 
-! Time stamp for conversion
-
-  restart_date = "2019-09-30 23:00:00"
-  
-! FV3 resolution and path to oro files
+! FV3 resolution and path to oro files for restart/perturbation conversion
 
   tile_size = 96
   tile_path = "/scratch1/NCEPDEV/stmp2/Michael.Barlage/models/vector/v2t_data/tile_files/C96.mx100_frac/"
+  
+!------------------- only restart conversion -------------------
+! Time stamp for conversion for restart conversion
+
+  restart_date = "2019-09-30 23:00:00"
   
 ! Path for static file  
   static_filename="/scratch1/NCEPDEV/stmp2/Michael.Barlage/forcing/C96/static/ufs-land_C96_static_fields.nc"
@@ -27,5 +30,22 @@
 ! Path for converted files; if same as tile/vector path, files may be overwritten
 
   output_path = "/scratch1/NCEPDEV/stmp2/Michael.Barlage/models/vector/v2t_data/workshop/"
+
+!------------------- only perturbation mapping -------------------
+! layout
+
+  lndp_layout = "1x4"
+
+! input files
+
+  lndp_input_file = "/scratch1/NCEPDEV/stmp4/Zhichang.Guo/Work/Test/vp/phil/stochastic_physics/unit_tests/stochy_out/workg_T162_984x488.tileXX.nc"
+
+! output files
+
+  lndp_output_file = "./output.nc"
+
+! land perturbation variable list
+
+  lndp_var_list='vgf','smc'
 
 /
