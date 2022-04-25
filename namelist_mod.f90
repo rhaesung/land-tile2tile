@@ -1,7 +1,7 @@
 module namelist_mod
   implicit none
 
-  integer, parameter   :: max_n_var_lndp = 6
+  integer, parameter   :: max_n_var_lndp = 20
   type namelist_type
     character*256      :: namelist_name = ""
     character*11       :: direction = ""
@@ -15,7 +15,7 @@ module namelist_mod
     character*3        :: lndp_layout = ""
     character*256      :: lndp_input_file = ""
     character*256      :: lndp_output_file = ""
-    character(len=3)   :: lndp_var_list(max_n_var_lndp)
+    character(len=128) :: lndp_var_list(max_n_var_lndp)
     integer            :: n_var_lndp
   end type namelist_type
 
@@ -35,7 +35,7 @@ contains
     character*3         :: lndp_layout
     character*256       :: lndp_input_file
     character*256       :: lndp_output_file
-    character(len=3)    :: lndp_var_list(max_n_var_lndp)
+    character(len=128)  :: lndp_var_list(max_n_var_lndp)
     integer             :: n_var_lndp
     integer             :: k
 
@@ -64,7 +64,7 @@ contains
 
     n_var_lndp= 0
     do k =1,size(lndp_var_list)
-       if (lndp_var_list(k) .EQ. 'XXX') then
+       if (trim(lndp_var_list(k)) .EQ. 'XXX') then
           cycle
        else
           n_var_lndp=n_var_lndp+1
