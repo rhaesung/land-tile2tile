@@ -32,13 +32,13 @@
   output_path = "/scratch1/NCEPDEV/stmp2/Michael.Barlage/models/vector/v2t_data/workshop/"
 
 !------------------- only perturbation mapping -------------------
-! layout
+! layout, options: 1x4, 4x1, 2x2, an input settings for generating the perturbation file
 
   lndp_layout = "1x4"
 
 ! input files
 
-  lndp_input_file = "/scratch1/NCEPDEV/stmp4/Zhichang.Guo/Work/Test/vp/phil/stochastic_physics/unit_tests/stochy_out/workg_T162_984x488.tileXX.nc"
+  lndp_input_file = "/scratch2/NCEPDEV/land/data/DA/ensemble_pert/workg_T162_984x488.tileXX.nc"
 
 ! output files
 

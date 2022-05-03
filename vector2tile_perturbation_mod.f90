@@ -70,7 +70,7 @@ contains
 
     if(.not.file_exists) then
       print*, trim(tile_filename), " does not exist"
-      print*, "Check paths and file name"
+      print*, "In routine mapping_perturbation: check paths and file name"
       stop 10
     end if
 
