@@ -2,6 +2,7 @@ program vector2tile_driver
 
   use namelist_mod
   use vector2tile_restart_mod
+  use vector2tile_perturbation_mod
   implicit none
 
   type(namelist_type)  :: namelist
@@ -24,7 +25,8 @@ program vector2tile_driver
 
   print*, "conversion direction: ",namelist%direction
   
-  if(namelist%direction /= "tile2vector" .and. namelist%direction /= "vector2tile" ) then
+  if(namelist%direction /= "tile2vector" .and. namelist%direction /= "vector2tile" .and. &
+     namelist%direction /= "lndp2vector" .and. namelist%direction /= "lndp2tile") then
     print*, "conversion direction: ",namelist%direction, " not recognized"
     stop 10 
   end if
@@ -35,10 +37,15 @@ program vector2tile_driver
 
   select case (namelist%direction)
   
-    case ("tile2vector" : "vector2tile")
+    case ("tile2vector", "vector2tile")
 
       write(*,*) "Option: "//trim(namelist%direction)
       call vector2tile_restart(namelist)
+    
+    case ("lndp2vector", "lndp2tile")
+
+      write(*,*) "Option: "//trim(namelist%direction)
+      call mapping_perturbation(namelist)
     
     case default
     
