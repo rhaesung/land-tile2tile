@@ -46,7 +46,6 @@ contains
   character*256       :: vector_filename
   character*300       :: tile_filename
   character*19        :: date
-  character*20        :: fstub
   integer             :: vector_length = 0
   integer             :: yyyy,mm,dd,hh,nn,ss
   integer             :: itile, ix, iy, iloc
@@ -84,15 +83,10 @@ contains
 ! Read FV3 tile information
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  write(fstub,*) namelist%tile_size
-  fstub = "oro_C"//trim(adjustl(fstub)) 
-  if ( namelist%tile_type .ne.  "" ) fstub = trim(fstub)//"."//trim(namelist%tile_type) 
-  write(6,* ) 'CSD fsub', fstub
-  
   do itile = 1, 6
     write(tile_filename,'(a5,i1,a3)')  ".tile", itile, ".nc"
 
-    tile_filename = trim(namelist%tile_path)//trim(fstub)//trim(adjustl(tile_filename))
+    tile_filename = trim(namelist%tile_path)//trim(namelist%tile_fstub)//trim(adjustl(tile_filename))
     inquire(file=trim(tile_filename), exist=file_exists)
   
     if(.not.file_exists) then 

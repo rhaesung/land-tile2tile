@@ -6,8 +6,8 @@ module namelist_mod
     character*256      :: namelist_name = ""
     character*11       :: direction = ""
     character*256      :: tile_path = ""
+    character*256      :: tile_fstub = ""
     integer            :: tile_size
-    character*10       :: tile_type = "" 
     character*19       :: restart_date = ""
     character*256      :: vector_restart_path = ""
     character*256      :: tile_restart_path = ""
@@ -27,8 +27,8 @@ contains
     type(namelist_type) :: namelist
     character*11        :: direction
     character*256       :: tile_path
+    character*256       :: tile_fstub
     integer             :: tile_size
-    character*10        :: tile_type
     character*19        :: restart_date
     character*256       :: vector_restart_path
     character*256       :: tile_restart_path
@@ -41,7 +41,7 @@ contains
     integer             :: n_var_lndp
     integer             :: k
 
-    namelist / run_setup  / direction, tile_path, tile_size, tile_type, restart_date, vector_restart_path, &
+    namelist / run_setup  / direction, tile_path, tile_fstub, tile_size,  restart_date, vector_restart_path, &
                             tile_restart_path, output_path, static_filename, lndp_layout,       &
                             lndp_input_file, lndp_output_file, lndp_var_list, n_var_lndp
 
@@ -53,8 +53,8 @@ contains
 
     namelist%direction           = direction
     namelist%tile_path           = tile_path
+    namelist%tile_fstub           = tile_fstub
     namelist%tile_size           = tile_size
-    namelist%tile_type           = tile_type
     namelist%restart_date        = restart_date
     namelist%vector_restart_path = vector_restart_path
     namelist%tile_restart_path   = tile_restart_path
