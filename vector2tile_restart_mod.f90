@@ -782,7 +782,6 @@ contains
   status = nf90_def_var(ncid, "vtype", NF90_DOUBLE,   &
       (/dim_id_xdim,dim_id_ydim,dim_id_time/), varid)
       if (status /= nf90_noerr) call handle_err(status)
-    status = nf90_enddef(ncid)
 
     status = nf90_def_var(ncid, "slc", NF90_DOUBLE,   &
       (/dim_id_xdim,dim_id_ydim,dim_id_soil,dim_id_time/), varid)
@@ -791,6 +790,9 @@ contains
     status = nf90_def_var(ncid, "tgxy", NF90_DOUBLE,   &
       (/dim_id_xdim,dim_id_ydim,dim_id_time/), varid)
       if (status /= nf90_noerr) call handle_err(status)
+
+    status = nf90_enddef(ncid)
+
 
 ! fill dimension variables 
 
