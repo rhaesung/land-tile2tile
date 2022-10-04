@@ -50,7 +50,7 @@ contains
   type(vector_type)   :: vector
   type(tile_type)     :: tile
   character*256       :: vector_filename
-  character*256       :: tile_filename
+  character*300       :: tile_filename
   character*19        :: date
   integer             :: vector_length = 0
   integer             :: yyyy,mm,dd,hh,nn,ss
@@ -92,21 +92,10 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   do itile = 1, 6
+    write(tile_filename,'(a5,i1,a3)')  ".tile", itile, ".nc"
 
-    if(namelist%tile_size < 100) then
-      write(tile_filename,'(a5,i2,a11,i1,a3)') "oro_C", namelist%tile_size, ".mx100.tile", itile, ".nc"
-    elseif(namelist%tile_size < 1000) then
-      write(tile_filename,'(a5,i3,a11,i1,a3)') "oro_C", namelist%tile_size, ".mx100.tile", itile, ".nc"
-    elseif(namelist%tile_size < 10000) then
-      write(tile_filename,'(a5,i4,a11,i1,a3)') "oro_C", namelist%tile_size, ".mx100.tile", itile, ".nc"
-    else
-      print *, "unknown tile size"
-      stop 10
-    end if
-
-    tile_filename = trim(namelist%tile_path)//trim(tile_filename)
-    
-    inquire(file=tile_filename, exist=file_exists)
+    tile_filename = trim(namelist%tile_path)//trim(namelist%tile_fstub)//trim(adjustl(tile_filename))
+    inquire(file=trim(tile_filename), exist=file_exists)
   
     if(.not.file_exists) then 
       print*, trim(tile_filename), " does not exist1"
@@ -114,7 +103,7 @@ contains
       stop 10 
     end if
     
-    status = nf90_open(tile_filename, NF90_NOWRITE, ncid)
+    status = nf90_open(trim(tile_filename), NF90_NOWRITE, ncid)
       if (status /= nf90_noerr) call handle_err(status)
 
     status = nf90_inq_varid(ncid, "land_frac", varid)

@@ -10,6 +10,7 @@
 
   tile_size = 96
   tile_path = "/scratch1/NCEPDEV/stmp2/Michael.Barlage/models/vector/v2t_data/tile_files/C96.mx100_frac/"
+  tile_fstub = "oro_C96.mx100"
   
 !------------------- only restart conversion -------------------
 ! Time stamp for conversion for restart conversion
