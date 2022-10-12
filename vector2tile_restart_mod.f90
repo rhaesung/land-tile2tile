@@ -17,7 +17,7 @@ module vector2tile_restart_mod
 ! needed for IMSaggregate_mod
     double precision, allocatable :: vegetation_type(:)
 ! needed by JEDI to mask out land-ice
-    double precision, allocatable :: soil_moisture      (:,:) !increased dim
+    double precision, allocatable :: soil_moisture      (:,:) 
 ! needed for JEDI QC of SMAP data
     double precision, allocatable :: soil_liquid        (:,:)
     double precision, allocatable :: temperature_ground (:)
@@ -34,7 +34,7 @@ module vector2tile_restart_mod
     double precision, allocatable :: snow_liq_layer     (:,:,:,:)
     double precision, allocatable :: temperature_soil   (:,:,:,:)
     real,             allocatable :: land_frac          (:,:,:)
-    double precision, allocatable :: soil_moisture      (:,:,:,:) !increased dim
+    double precision, allocatable :: soil_moisture      (:,:,:,:)
     double precision, allocatable :: vegetation_type(:,:,:)
 ! needed by add increments
     double precision, allocatable :: slmsk              (:, :, :)
@@ -80,7 +80,7 @@ contains
   allocate(tile%snow_ice_layer     (namelist%tile_size,namelist%tile_size,3,6))
   allocate(tile%snow_liq_layer     (namelist%tile_size,namelist%tile_size,3,6))
   allocate(tile%temperature_soil   (namelist%tile_size,namelist%tile_size,4,6))
-  allocate(tile%soil_moisture      (namelist%tile_size,namelist%tile_size,4,6)) !increased dim
+  allocate(tile%soil_moisture      (namelist%tile_size,namelist%tile_size,4,6)) 
   allocate(tile%land_frac          (namelist%tile_size,namelist%tile_size,6))
   allocate(tile%slmsk              (namelist%tile_size,namelist%tile_size,6))
   allocate(tile%vegetation_type    (namelist%tile_size,namelist%tile_size,6))
@@ -130,7 +130,7 @@ contains
   allocate(vector%snow_ice_layer     (vector_length,3))
   allocate(vector%snow_liq_layer     (vector_length,3))
   allocate(vector%temperature_soil   (vector_length,4))
-  allocate(vector%soil_moisture      (vector_length,4)) !increased dim
+  allocate(vector%soil_moisture      (vector_length,4)) 
   allocate(vector%vegetation_type    (vector_length))
   allocate(vector%soil_liquid        (vector_length,4))
   allocate(vector%temperature_ground (vector_length))
@@ -170,7 +170,7 @@ contains
         tile%snow_ice_layer(ix,iy,:,itile)      = vector%snow_ice_layer(iloc,:)
         tile%snow_liq_layer(ix,iy,:,itile)      = vector%snow_liq_layer(iloc,:)
         tile%temperature_soil(ix,iy,:,itile)    = vector%temperature_soil(iloc,:)
-        tile%soil_moisture(ix,iy,:,itile)       = vector%soil_moisture(iloc,:) !increased dim
+        tile%soil_moisture(ix,iy,:,itile)       = vector%soil_moisture(iloc,:) 
         tile%slmsk(ix,iy,itile)         = 1.
         tile%soil_liquid(ix,iy,:,itile)         = vector%soil_liquid(iloc,:)
         tile%temperature_ground(ix,iy,itile)    = vector%temperature_ground(iloc)
@@ -367,7 +367,7 @@ contains
   endif
   status = nf90_get_var(ncid, varid , vector%soil_moisture , &
       start = (/1            , 1, 1/)                , &
-      count = (/vector_length, 4, 1/)) !increased dim
+      count = (/vector_length, 4, 1/))
 
   status = nf90_inq_varid(ncid, "soil_liquid_vol", varid)
   if (status /= nf90_noerr) then
@@ -772,7 +772,7 @@ contains
       if (status /= nf90_noerr) call handle_err(status)
 
     status = nf90_def_var(ncid, "smc", NF90_DOUBLE,   &
-      (/dim_id_xdim,dim_id_ydim,dim_id_soil,dim_id_time/), varid) !increased dim
+      (/dim_id_xdim,dim_id_ydim,dim_id_soil,dim_id_time/), varid) 
       if (status /= nf90_noerr) call handle_err(status)
 
     status = nf90_def_var(ncid, "slmsk", NF90_DOUBLE,   &
@@ -864,7 +864,7 @@ contains
 
     status = nf90_inq_varid(ncid, "smc", varid)
     status = nf90_put_var(ncid, varid , tile%soil_moisture(:,:,:,itile)   , &
-      start = (/1,1,1,1/), count = (/namelist%tile_size, namelist%tile_size, 4, 1/)) !increased dim
+      start = (/1,1,1,1/), count = (/namelist%tile_size, namelist%tile_size, 4, 1/)) 
 
 ! include in output, so can be used to id which tile grid cells are being simulated
     status = nf90_inq_varid(ncid, "slmsk", varid)
