@@ -299,9 +299,9 @@ contains
   status = nf90_get_var(ncid, varid , vector%snow_depth  , &
       start = (/1,1/), count = (/vector_length, 1/))
 
-  status = nf90_inq_varid(ncid, "snow_levels", varid)
+  status = nf90_inq_varid(ncid, "active_snow_levels", varid)
   if (status /= nf90_noerr) then 
-        print *, 'snow_levels variable missing from vector file' 
+        print *, 'active_snow_levels variable missing from vector file' 
         call handle_err(status) 
   endif
   status = nf90_get_var(ncid, varid , vector%active_snow_layers  , &
@@ -615,7 +615,7 @@ contains
   status = nf90_put_var(ncid, varid , vector%snow_depth  , &
       start = (/1,1/), count = (/vector_length, 1/))
 
-  status = nf90_inq_varid(ncid, "snow_levels", varid)
+  status = nf90_inq_varid(ncid, "active_snow_levels", varid)
   status = nf90_put_var(ncid, varid , vector%active_snow_layers  , &
       start = (/1,1/), count = (/vector_length, 1/))
 
